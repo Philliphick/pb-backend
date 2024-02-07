@@ -20,9 +20,6 @@ exports.getProjects = async (req, res, next) => {
         res.status(200).json(projects);
         console.log("Projects found:", projects);
         
-       
-    
-    
     } 
 
     
