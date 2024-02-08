@@ -6,10 +6,11 @@ exports.getAllProjects = async (req, res, next) => {
 
     try {
         const projects = await Post.find();
+        console.log(projects)
         res.status(200).json({
             count: projects.length,
             data: projects
-        });;
+        });
     } catch(err) {
         next(err);
     }
