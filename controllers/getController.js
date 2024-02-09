@@ -5,10 +5,10 @@ const  Post  = require("../models/project");
 
 exports.getProjects = async (req, res, next) => {
     try { 
-        const { nameParam } = req.params;
+        const { id } = req.params;
         
-        console.log("Fetching projects with name:", nameParam);
-        const projects = await Post.find({ name: { $regex: new RegExp(nameParam, "i") } });
+        console.log("Fetching projects with name:", id);
+        const projects = await Post.find({ _id: id });
         
         console.log("Projects found:", projects);
         if (!projects) {
