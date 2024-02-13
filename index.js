@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
 const mongoose = require("mongoose");
+// const PORT = 'https://project-board-backend.onrender.com' || 5001
 // IMPORT SCHEMAS
 
 const router = require("./routes/projectRoutes");
@@ -24,6 +25,8 @@ app.use(express.json());
 app.use(cors());
 app.use(router);
 
+const port = process.env.PORT || 5001;
+app.listen(port, () => console.log(`Server started on port ${port}`));
 
-app.listen(5001, () => console.log("Server started on port 5000"));
+
 

@@ -13,10 +13,12 @@ const { makeUser } = require("../controllers/makeUserController");
 // USER ROUTES
 router.post("/newUser", makeUser);
 
+
 // POST ROUTES
 router.delete("/delete/:_id", deletePost);
 router.post("/makePost", makePost)
 router.get("/:nameParam", getProjects);
+
 router.get("/", getAllProjects);
 
 
