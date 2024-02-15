@@ -1,28 +1,43 @@
+const cors = require('cors');
+require("dotenv").config();
 const cookieParser = require('cookie-parser')
 const express = require('express')
 const flash = require('express-flash')
 const morgan = require('morgan')
-// import { generalErrorHandler, notFoundHandler } from './errorMiddleware';
 const router = require("./routes/projectRoutes");
-const authRoutes = require("./routes/authRoutes");
-// import routes from './routes/index';
+// const authRoutes = require("./routes/authRoutes");
+
+
 const { notFoundHandler, generalErrorHandler } = require('./src/middleware/errorMiddleware');
-const { checkJwt } = require('./src/middleware/authMiddleware');
+const { checkJwt, logHeaders } = require('./src/middleware/authMiddleware');
 const mongoose = require('mongoose');
 
 
 const app = express();
+const baseUrl = process.env.AUTH0_BASE_URL;
 
 app.use(morgan('dev'));
+app.use(cors({ origin: [baseUrl, 'http://localhost:3000/', 'http://localhost:3000', 'http://localhost:3000/api' ], credentials: true, 
+accessControlAllowOrigin: true,
+
+
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(flash());
 
-app.use('/api', checkJwt, routes);
+// Use the routers
+// app.use('/api', checkJwt, authRoutes);
+app.use(logHeaders);
+app.get('/', (req, res) => {
+  console.log("hellow world")
+})
+app.use('/api', checkJwt, router);
 
 app.use(notFoundHandler);
 app.use(generalErrorHandler);
+
 
 // connect to database
 mongoose.connect(process.env.MONGODB_URI)

@@ -10,6 +10,17 @@ const { makePost } = require("../controllers/makePostController");
 //IMPORT USER ROUTES
 const { makeUser } = require("../controllers/makeUserController");
 
+const asyncHandler = require('express-async-handler');
+router.get(
+    '/private/private-route',
+    asyncHandler(async (req, res, next) => {
+      console.log(req.headers)
+      console.log("hitting private route")
+      res.status(200).send({ message: 'This is a private route' });
+      
+    })
+ 
+  );
 // USER ROUTES
 router.post("/newUser", makeUser);
 
@@ -19,7 +30,17 @@ router.delete("/delete/:_id", deletePost);
 router.post("/makePost", makePost)
 router.get("/:nameParam", getProjects);
 
+
+
 router.get("/", getAllProjects);
+
+
+
+
+
+
+
+
 
 
 module.exports = router;

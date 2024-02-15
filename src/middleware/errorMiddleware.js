@@ -1,10 +1,10 @@
-exports.notFoundHandler = (req, res, next) => {
+notFoundHandler = (req, res, next) => {
   const error = new Error(`Not Found = ${req.originalUrl}`);
   res.status(404);
   next(error);
 };
 
-exports.generalErrorHandler = (err, req, res, next) => {
+generalErrorHandler = (err, req, res, next) => {
   const statusCode = res.statusCode == 200 ? 500 : res.statusCode;
 
   res.status(statusCode).json({
@@ -12,3 +12,5 @@ exports.generalErrorHandler = (err, req, res, next) => {
       stack: process.env.NODE_ENV === 'production' ? null : err.stack,
   });
 };
+
+module.exports = { notFoundHandler, generalErrorHandler};
