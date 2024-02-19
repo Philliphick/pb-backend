@@ -1,29 +1,28 @@
-// const express = require('express');
-// const authRoutes = express.Router();
+// jwt auth 
+
+// const jwt = require("jsonwebtoken");
+// const login = (req, res) => {
+//   const { email, password } = req.body;
+//   const token = jwt.sign(
+//     {
+//       email,
+//       password,
+//     },
+//     "secret"
+//   );
+//     res.cookie("token", token, { httpOnly: true });
+// };
+
+const express = require("express");
+const router = express.Router();
+const { authUser } = require("../middleware/auth");
+const { login, logout, register } = require("../controllers/authController");
 
 
-// // Handle authentication routes
-// authRoutes.get('/login', (req, res) => {
-//     // Redirect to Auth0 login route
-//     res.redirect('/login');
-//   });
-  
-//   authRoutes.get('/logout', (req, res) => {
-//     // Redirect to Auth0 logout route
-//     res.redirect('/logout');
-//   });
-  
-  
-//   // Route to fetch user profile
-//   authRoutes.get('/me', (req, res) => {
-//     // Check if user is authenticated
-//     if (req.isAuthenticated()) {
-//       // Return user profile
-//       res.json(req.oidc.user);
-//     } else {
-//       // Return unauthorized status if user is not authenticated
-//       res.status(401).json({ message: 'Unauthorized' });
-//     }
-//   });
-  
-//   module.exports = authRoutes;
+router.post("/login", login);
+router.post("/register", register);
+router.post("/logout", authUser, logout); //authUser here?
+
+// when a client req is made to /auth/login or /auth/register or /auth/logout it will be sent here
+
+module.exports = router
