@@ -9,13 +9,14 @@ const { getProjects } = require("../controllers/getController");
 const { getAllProjects } = require("../controllers/getAllController");
 const { deletePost } = require("../controllers/deleteController");
 const { makePost } = require("../controllers/makePostController");
+const { getUser } = require("../controllers/getUser");
 
 //IMPORT USER ROUTES
 const { makeUser } = require("../controllers/makeUserController");
 
 
-// USER ROUTES
-// router.post("/newUser", makeUser);
+router.post("/newUser", makeUser);
+router.get("/user/:id", getUser);
 
 
 // POST ROUTES
@@ -25,14 +26,15 @@ router.get("/:nameParam", authUser, getProjects);
 
 
 
-
 router.get("/", getAllProjects);
 
 // when a client req is made to /project/:nameParam it will be sent here, for example
 
 
 
+
 module.exports = router;
+
 
 
 
