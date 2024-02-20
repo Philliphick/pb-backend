@@ -6,6 +6,7 @@ const { getProjects } = require("../controllers/getController");
 const { getAllProjects } = require("../controllers/getAllController");
 const { deletePost } = require("../controllers/deleteController");
 const { makePost } = require("../controllers/makePostController");
+const { getUser } = require("../controllers/getUser");
 
 //IMPORT USER ROUTES
 const { makeUser } = require("../controllers/makeUserController");
@@ -23,7 +24,7 @@ router.get(
   );
 // USER ROUTES
 router.post("/newUser", makeUser);
-
+router.get("/user/:id", getUser);
 
 // POST ROUTES
 router.delete("/delete/:_id", deletePost);
@@ -31,16 +32,13 @@ router.post("/makePost", makePost)
 router.get("/:nameParam", getProjects);
 
 
-
 router.get("/", getAllProjects);
 
 
-
-
-
-
-
-
+router.use((err, req, res, next) => {
+  console.error('Unexpected error:', err);
+  res.status(500).send('Internal Server Error');
+});
 
 
 module.exports = router;
