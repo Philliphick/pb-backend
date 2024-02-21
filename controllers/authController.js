@@ -1,5 +1,7 @@
 const bcrypt = require("bcrypt");
 
+const createError = require("http-errors");
+
 const jwt = require("jsonwebtoken");
 
 require('dotenv').config();
@@ -14,12 +16,26 @@ const secretKey = process.env.SECRET_KEY;
 
 exports.register = async function (req, res, next) {
   try {
-    const { username, password } = req.body; // request from frontend
+    console.log("before register", req.body);
+    const { username, email, password } = req.body; // request from frontend
 
     const existingUser = await Users.findOne({ username });
+    const existingEmail = await Users.findOne({ email });
 
     if (existingUser) {
       return res.status(400).json({ message: "Username already exists." });
+    }
+    if (existingEmail) {
+      return res.status(400).json({ message: "Email already exists." });
+    }
+    if (!email) {
+      return res.status(400).json({ message: "Email is required." });
+    }
+    if (!username) {
+      return res.status(400).json({ message: "Username is required." });
+    }
+    if (!password) {
+      return res.status(400).json({ message: "Password is required." });
     }
     if (!regexPassword.test(password)) {
       return res.status(400).json({
@@ -31,15 +47,18 @@ exports.register = async function (req, res, next) {
     const hashedPassword = await bcrypt.hash(password, saltRounds); // takes password and hashes the password, encryption
     // you need to create a user model
     const newUser = new Users({ 
-    // name: req.body.name,
+    name: req.body.name || "",
     email: req.body.email,
-    username: username,
-    password: hashedPassword
+    username: req.body.username,
+    password: hashedPassword,
+    githubLink: req.body.githubLink || "no github link",
+
     
-    // githubLink: req.body.githubLink    
+    
+     
 
     }); // creates an instance of the userModel with the request from the frontend
-
+    console.log("from register", newUser);
     await newUser.save(); // saves the user information into the database.
 
     // create a token for the user
@@ -65,24 +84,31 @@ exports.register = async function (req, res, next) {
 exports.login = async function login(req, res, next) {
   try {
     const { username, password } = req.body;
+    const existingUser = await Users.findOne({ username });
+    console.log("user found from username and password in login", existingUser);
+    console.log("before login", username, password);
+
 
     // havent made the user file yet
+    
 
     const user = await Users.findOne({ username });
+
+    console.log("user found", user);
 
     if (!user) {
       console.error("The username was not found");
       throw createError(401, "The username was not found");
     }
-
+    // compare passwords
     const match = bcrypt.compare(password, user.password);
 
     if (!match) {
       console.log("Password does not match");
       throw res.status(401).json({ message: "Invalid credentials" });
     }
-    
-    const token = jwt.sign({ userId: user._id }, secretKey, 
+    // generate a token
+    const token = jwt.sign({ userId: user._id }, secretKey, {
       expiresIn: "1h",
     });
 
@@ -94,8 +120,10 @@ exports.login = async function login(req, res, next) {
       path: "/",
       secure: true,
     });
-
-    res.json({ status: 200, message: "Login Successful" });
+    console.log("after res.cookie", res.cookie)
+    // send success response
+    res.json({ status: 200, message: "Login Successful", user: { username: user.username, email: user.email }    });
+    console.log("after login", user);
   } catch (error) {
     next(error);
   }

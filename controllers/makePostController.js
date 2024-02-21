@@ -7,6 +7,8 @@ exports.makePost = async (req, res, next) => {
     try { 
         console.log("in the makePost controller")
         const { name, description, tags, repoLink, timeframe } = req.body;
+// added logic to collect the userId from the decoded token
+        const userId = req.decodedToken.userId;
 
         const newPost = await Post.create({ 
             _id: new mongoose.Types.ObjectId(),
@@ -14,9 +16,13 @@ exports.makePost = async (req, res, next) => {
             description, 
             tags, 
             repoLink, 
-            timeframe });
+            timeframe,
+            userId: userId //the users ID is now attached to every post they make
+         });
         
         res.status(200).json({message: "Post created successfully", post: newPost});
+
+        
         
     } catch (error) {
         // Handle errors

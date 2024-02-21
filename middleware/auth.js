@@ -1,12 +1,17 @@
+// TODO: the login is being passed the user correctly, and the token is being passed correctly, but the userid/ user is not being accessed correctly here
+
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const secretKey = process.env.SECRET_KEY
-const User = require("../models/user");
+const user = require("../models/user");
 
 
 exports.authUser = async function authUser(req, res, next) {
+    console.log("authUser middleware called");
     const tokenToDecode = req.cookies.token; 
+    
     if (!tokenToDecode) {
+      console.log("no token found");
       return res.sendStatus(403);
     } else {
       try {
@@ -23,12 +28,13 @@ exports.authUser = async function authUser(req, res, next) {
         );
 
         req.decodedToken = decoded;
+        console.log(req);
         req.codedToken = tokenToDecode;
         userIdToFind = req.decodedToken.userId;
           // you need to create a user model
-        const user = await user.findOne({ _id: userIdToFind });
-        const username = user.username;
-
+        const foundUser = await user.findOne({ _id: userIdToFind });
+        const username = foundUser.username;
+          console.log(username)
         req.currentUser = username;
         req.success = true;
         next();
