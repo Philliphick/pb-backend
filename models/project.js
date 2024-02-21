@@ -6,6 +6,7 @@ const projectSchema = mongoose.Schema({
     description: String,
     tags: Array,
     repoLink: String,
-    timeframe: Number
+    timeframe: Number,
+    userId: String
 })
 module.exports = mongoose.model("Post", projectSchema);
