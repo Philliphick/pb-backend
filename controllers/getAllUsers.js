@@ -1,15 +1,15 @@
 const createError = require("http-errors");
 const axios = require("axios");
-const  Post  = require("../models/project");
+const  User  = require("../models/user");
 
-exports.getAllProjects = async (req, res, next) => {
+
+exports.getAllUsers = async (req, res, next) => {
 
     try {
-        const projects = await Post.find();
+        const allUsers = await User.find();
         console.log(projects)
         res.status(200).json({
-            
-            data: projects
+            data: allUsers
         });
     } catch(err) {
         next(err);
