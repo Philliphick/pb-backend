@@ -1,4 +1,4 @@
-// TODO: the login is being passed the user correctly, and the token is being passed correctly, but the userid/ user is not being accessed correctly here
+
 
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
