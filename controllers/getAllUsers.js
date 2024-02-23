@@ -7,7 +7,7 @@ exports.getAllUsers = async (req, res, next) => {
 
     try {
         const allUsers = await User.find();
-        console.log(projects)
+        console.log(allUsers)
         res.status(200).json({
             data: allUsers
         });
