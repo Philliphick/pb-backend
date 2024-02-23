@@ -12,6 +12,7 @@ const { makePost } = require("../controllers/makePostController");
 const { getCurrentUser } = require("../controllers/getCurrentUser");
 const { getAllUsers } = require("../controllers/getAllUsers");
 const { getUserById } = require("../controllers/getUserById");
+const { getProjectByUserId } = require("../controllers/getProjectByUserId");
 
 //IMPORT USER ROUTES
 const { makeUser } = require("../controllers/makeUserController");
@@ -29,6 +30,7 @@ router.get("/allusers", getAllUsers);
 router.delete("/delete/:_id", authUser, deletePost);
 router.post("/makePost", authUser, makePost)
 router.get("/:nameParam", authUser, getProjects);
+router.get("/getProjectByUserId", authUser, getProjectByUserId);
 
 
 
