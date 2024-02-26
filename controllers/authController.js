@@ -84,6 +84,7 @@ exports.register = async function (req, res, next) {
 exports.login = async function login(req, res, next) {
   try {
     const { username, password } = req.body;
+    console.log("THIS IS A LOGIN ROUTE", req.body);
     const existingUser = await Users.findOne({ username });
     console.log("user found from username and password in login", existingUser);
     console.log("before login", username, password);

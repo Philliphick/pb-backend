@@ -9,6 +9,7 @@ const user = require("../models/user");
 exports.authUser = async function authUser(req, res, next) {
     console.log("authUser middleware called");
     const tokenToDecode = req.cookies.token; 
+    console.log("req.cookies", req.cookies)
     
     if (!tokenToDecode) {
       console.log("no token found");
