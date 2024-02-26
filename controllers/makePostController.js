@@ -6,17 +6,17 @@ const mongoose = require("mongoose");
 exports.makePost = async (req, res, next) => {
     try { 
         console.log("in the makePost controller")
-        const { name, description, tags, repoLink, timeframe } = req.body;
+        const { name, subheading, description, tags, repoLink } = req.body;
 // added logic to collect the userId from the decoded token
         const userId = req.decodedToken.userId;
 
         const newPost = await Post.create({ 
             _id: new mongoose.Types.ObjectId(),
             name,
+            subheading, 
             description, 
             tags, 
             repoLink, 
-            timeframe,
             userId: userId //the users ID is now attached to every post they make
          });
         
