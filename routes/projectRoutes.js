@@ -30,7 +30,7 @@ router.get("/allusers", getAllUsers);
 router.delete("/delete/:_id", authUser, deletePost);
 router.post("/makePost", authUser, makePost)
 router.get("/:nameParam", authUser, getProjects);
-router.get("/getProjectByUserId", authUser, getProjectByUserId);
+router.get("/getProjectByUserId/:id", getProjectByUserId);
 
 
 

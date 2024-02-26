@@ -7,7 +7,7 @@ exports.getUserById = async (req, res, next) => {
     try {
         const { id } = req.params;
 
-        console.log("Fetching projects with name:", id);
+        console.log("Fetching user with name:", id);
         const user = await User.find({ _id: id });
 
         console.log("User found:", user);
