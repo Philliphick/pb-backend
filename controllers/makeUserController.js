@@ -5,15 +5,13 @@ const mongoose = require("mongoose");
 
 exports.makeUser = async (req, res, next) => {
     try { 
-        const { name, email, userName, password, githubLink } = req.body;
+        const { email, userName, password } = req.body;
 
         const newUser = await User.create({ 
-            _id: new mongoose.Types.ObjectId(),
-            name,
             email, 
             userName, 
-            password, 
-            githubLink });
+            password
+            });
         
         res.status(200).json({message: "User created successfully", user: newUser});
         
