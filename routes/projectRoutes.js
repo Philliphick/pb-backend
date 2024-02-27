@@ -27,7 +27,7 @@ router.get("/allusers", getAllUsers);
 
 
 // POST ROUTES
-router.delete("/delete/:_id", authUser, deletePost);
+router.delete("/delete/:_id", deletePost);
 router.post("/makePost", authUser, makePost)
 router.get("/:nameParam", authUser, getProjects);
 router.get("/getProjectByUserId/:id", getProjectByUserId);
