@@ -13,21 +13,22 @@ const { getCurrentUser } = require("../controllers/getCurrentUser");
 const { getAllUsers } = require("../controllers/getAllUsers");
 const { getUserById } = require("../controllers/getUserById");
 const { getProjectByUserId } = require("../controllers/getProjectByUserId");
+const { makeProfile } = require("../controllers/makeProfileController");
 
 //IMPORT USER ROUTES
-const { makeUser } = require("../controllers/makeUserController");
 
 
-router.post("/newUser", makeUser);
+
+
 router.get("/getprofile", authUser, getCurrentUser);
 router.get("/getUserById/:id", getUserById);
-
+router.post("/makeProfile/:id", makeProfile)
 
 router.get("/allusers", getAllUsers);
 
 
 // POST ROUTES
-router.delete("/delete/:_id", authUser, deletePost);
+router.delete("/delete/:_id", deletePost);
 router.post("/makePost", authUser, makePost)
 router.get("/:nameParam", authUser, getProjects);
 router.get("/getProjectByUserId/:id", getProjectByUserId);

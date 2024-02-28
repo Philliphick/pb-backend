@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 
 exports.getProjectByUserId = async (req, res, next) => {
     try { 
+        console.log("EWDFOIWEFJOFMNIWENOIWMN3RINIWO3NDFNW4FK4FEI4N")
         console.log("the req for getProjectByUserId", req.params.id)
         const { id } = req.params;
         
