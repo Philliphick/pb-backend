@@ -7,22 +7,20 @@ exports.makeProfile = async (req, res, next) => {
   try {
     console.log("in the makeProfile controller")
     const { id } = req.params;  
-    const { name, email, githubLink, telegram, twitter, location, photo } = req.body;  // get the new profile data from the request body
+    const { name, email, githubLink, telegramUsername, twitter, location, photo } = req.body;  // get the new profile data from the request body
 
-    
     const user = await User.findById(id);
     if (!user) {
       return next(createError(404, 'User not found'));
     }
 
-    
     user.name = name;
     user.email = email;
     user.githubLink = githubLink;
-    user.telegram = telegram;
+    user.telegramUsername = telegramUsername;
     user.twitter = twitter;
     user.location = location;
-    user.photo = photo;
+    
 
     const updatedUser = await user.save();
 
