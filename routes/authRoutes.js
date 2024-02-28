@@ -1,18 +1,5 @@
 // jwt auth 
 
-// const jwt = require("jsonwebtoken");
-// const login = (req, res) => {
-//   const { email, password } = req.body;
-//   const token = jwt.sign(
-//     {
-//       email,
-//       password,
-//     },
-//     "secret"
-//   );
-//     res.cookie("token", token, { httpOnly: true });
-// };
-
 const express = require("express");
 const router = express.Router();
 const { authUser } = require("../middleware/auth");
