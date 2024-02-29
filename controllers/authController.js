@@ -52,7 +52,12 @@ exports.register = async function (req, res, next) {
     email: req.body.email,
     username: req.body.username,
     password: hashedPassword,
-    githubLink: req.body.githubLink || "no github link",
+    githubLink: req.body.githubLink || "",
+    telegramUsername: "",
+    twitter: "",
+    location: "",
+
+    
 
 
      
