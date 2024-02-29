@@ -22,7 +22,7 @@ const { makeProfile } = require("../controllers/makeProfileController");
 
 router.get("/getprofile", authUser, getCurrentUser);
 router.get("/getUserById/:id", getUserById);
-router.post("/makeProfile/:id", makeProfile)
+router.patch("/makeProfile/:id", makeProfile)
 
 router.get("/allusers", getAllUsers);
 

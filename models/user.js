@@ -7,7 +7,9 @@ const userSchema = mongoose.Schema({
     username: String,
     password: String,
     githubLink: String,
-    telegramUsername: String
+    telegramUsername: String,
+    twitter: String,
+    location: String,
     
 })
 module.exports = mongoose.model("User", userSchema);

@@ -18,9 +18,10 @@ exports.register = async function (req, res, next) {
   try {
     console.log("before register", req.body);
     const { username, email, password } = req.body; // request from frontend
+    console.log("register", req.body);
 
-    const existingUser = await Users.findOne({ username });
-    const existingEmail = await Users.findOne({ email });
+    const existingUser = await Users.findOne({ username: username });
+    const existingEmail = await Users.findOne({ email: email });
 
     if (existingUser) {
       return res.status(400).json({ message: "Username already exists." });
@@ -28,15 +29,15 @@ exports.register = async function (req, res, next) {
     if (existingEmail) {
       return res.status(400).json({ message: "Email already exists." });
     }
-    if (!email) {
-      return res.status(400).json({ message: "Email is required." });
-    }
-    if (!username) {
-      return res.status(400).json({ message: "Username is required." });
-    }
-    if (!password) {
-      return res.status(400).json({ message: "Password is required." });
-    }
+    // if (!email) {
+    //   return res.status(400).json({ message: "Email is required." });
+    // }
+    // if (!username) {
+    //   return res.status(400).json({ message: "Username is required." });
+    // }
+    // if (!password) {
+    //   return res.status(400).json({ message: "Password is required." });
+    // }
     if (!regexPassword.test(password)) {
       return res.status(400).json({
         message:
@@ -51,10 +52,14 @@ exports.register = async function (req, res, next) {
     email: req.body.email,
     username: req.body.username,
     password: hashedPassword,
-    githubLink: req.body.githubLink || "no github link",
+    githubLink: req.body.githubLink || "",
+    telegramUsername: "",
+    twitter: "",
+    location: "",
 
     
-    
+
+
      
 
     }); // creates an instance of the userModel with the request from the frontend
@@ -132,15 +137,19 @@ exports.login = async function login(req, res, next) {
 
 
 exports.logout = async function (req, res, next){
+  console.log("Logout route accessed");
   try {
-    res.clearCookie("token",{
-      httpOnly:true,
-      sameSite:"None",
-      path:"/",
-      secure:true,
+    // Clear the token cookie
+    res.clearCookie("token", {
+      httpOnly: true,
+      sameSite: "None",
+      path: "/",
+      secure: true,
     });
-    res.json({ status:200, message:"logout Sucessful"});
+    // Return a 204 (No Content) status code upon successful logout
+    res.status(204).send(); 
   } catch (error){
+    console.error("Logout error:", error);
     next(error);
   };
 };
