@@ -13,7 +13,7 @@ const mongoose = require('mongoose');
 const app = express();
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: 'https://pb-front.vercel.app',
     credentials: true,
   })
 );
@@ -37,7 +37,7 @@ mongoose.connect(process.env.MONGODB_URI)
   .catch((err) => console.log(err));
 
 // setting up the express server
-const port = process.env.PORT || 5001;
+const port = 5001 || process.env.PORT;
 app.listen(port, () => console.log(`Server started on port ${port}`));
 
 
